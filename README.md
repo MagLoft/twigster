@@ -4,14 +4,17 @@ A standalone parser for twig templates.
 
 ## Usage
 
-    Usage: twigster [options] template
-    twigster is a standalone parser for twig templates
+    Twigster version 0.2.0
+
+    Usage:
+      twigster render [options] [--] <template>
 
     Arguments:
-      template       path to the twig temlpate to process
+      template              Twig template to render
 
     Options:
-      -h, --help     show this help message and exit
-      -d, --dir      twig templates root directory (for resolving paths)
-      -y, --yaml     path to a .yaml file that contains locals
-      -v, --version  show Twigster version
+      -d, --dir=DIR         twig templates root directory (for resolving paths) [default: "."]
+      -y, --yaml[=YAML]     path to a .yaml file that contains locals
+      -h, --help            Display this help message
+      -q, --quiet           Do not output any message
+      -V, --version         Display this application version
