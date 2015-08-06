@@ -6,23 +6,26 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 
 class Twigster {
-    const VERSION = "0.1.0";
+    const VERSION = "0.2.0";
     private $_locals = array();
-    private $_startHooks = array();
-    private $_failureHooks = array();
     private $_dirName = ".";
     private $_template = null;
     
-    public function __construct($template) {
+    public function __construct($template=null, $dirName=null) {
+        if($template) {
+            $this->setTemplate($template);
+        }
+        if($dirName) {
+            $this->setDirName($dirName);
+        }
+    }
+    
+    public function setTemplate($template) {
         $this->_template = $template;
     }
     
-    public function onStart($hook) {
-        $this->_startHooks[] = $hook;
-    }
-    
-    public function onFailure($hook) {
-        $this->_failureHooks[] = $hook;
+    public function getFullTemplatePath() {
+        return $this->_dirName . "/" . $this->_template;
     }
     
     public function setLocal($local, $value = null) {
@@ -38,29 +41,27 @@ class Twigster {
         $this->_dirName = $dirName;
     }
     
-    public function start() {
-        $result = $this->_runHooks($this->_startHooks);
+    public function render() {
         $loader = new Twig_Loader_Filesystem($this->_dirName);
         $twig   = new Twig_Environment($loader);
-        echo $twig->render($this->_template, $this->_locals);
+        return $twig->render($this->_template, $this->_locals);
     }
     
-    private function _runHooks($hooks) {
-        extract($this->_locals);
-        
-        foreach ($hooks as $__hook) {
-            if (is_string($__hook)) {
-                eval($__hook);
-            } elseif (is_callable($__hook)) {
-                call_user_func($__hook, $this, get_defined_vars());
-            } else {
-                throw new \RuntimeException(sprintf('Hooks must be closures or strings of PHP code. Got [%s].', gettype($__hook)));
-            }
-            
-            // hooks may set locals
-            extract($this->_locals);
-        }
-        
-        return get_defined_vars();
+    public function showUsage() {
+        echo <<<USAGE
+Usage: twigster [options] template
+twigster is a standalone parser for twig templates
+
+Arguments:
+  template       path to the twig temlpate to process
+
+Options:
+  -h, --help     show this help message and exit
+  -d, --dir      twig templates root directory (for resolving paths)
+  -y, --yaml     path to a .yaml file that contains locals
+  -v, --version  show Twigster version
+
+USAGE;
+        exit(0);
     }
 }

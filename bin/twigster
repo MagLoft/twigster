@@ -3,9 +3,12 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$twigster = new \Twigster\Twigster($argv[count($argv) - 1]);
+use Twigster\Twigster;
+use Twigster\TwigsterCommand;
+use Symfony\Component\Console\Application;
 
-$options = new \Twigster\CLIOptionsHandler();
-$options->handle($twigster);
-
-$twigster->start();
+$application = new Application();
+$application->setName("Twigster");
+$application->setVersion(Twigster::VERSION);
+$application->add(new TwigsterCommand());
+$application->run();
