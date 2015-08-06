@@ -1,0 +1,8 @@
+{% include 'header.twig' %}
+
+<h1>Hello {{name}}</h1>
+
+<h2>Users</h2>
+{% for user in users %}
+    <p>{{user.name}}, {{user.age}}</p>
+{% endfor %}

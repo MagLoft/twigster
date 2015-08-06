@@ -1,0 +1,16 @@
+{
+    "name": "magloft/twigster",
+    "description": "A standalone parser for twig templates",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3.0",
+        "twig/twig": "~1.19",
+        "symfony/yaml": "~2.7"
+    },
+    "autoload": {
+        "psr-0": {
+            "Twigster": "lib"
+        }
+    },
+    "bin": ["bin/twigster"]
+}

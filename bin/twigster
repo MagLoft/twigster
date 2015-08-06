@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$twigster = new \Twigster\Twigster($argv[count($argv) - 1]);
+
+$options = new \Twigster\CLIOptionsHandler();
+$options->handle($twigster);
+
+$twigster->start();
