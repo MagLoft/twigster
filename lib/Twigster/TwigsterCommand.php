@@ -59,12 +59,6 @@ class TwigsterCommand extends Command {
             $twigster->setLocal($values);
         }
 
-        $result = $twigster->render();
-        
-        echo "<pre>";
-        var_dump($result);
-        echo "</pre>";
-        die();
-
+        echo $twigster->render();
     }
 }
